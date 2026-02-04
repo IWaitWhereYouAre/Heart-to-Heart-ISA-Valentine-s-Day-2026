@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Heart to Heart | Atelier ISA</title>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
@@ -30,6 +31,7 @@
       background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
     }
 
+    /* petals */
     .petal {
       position: fixed;
       top: -10%;
@@ -38,12 +40,10 @@
       animation: fall linear infinite;
       background: white;
       border-radius: 150% 0 150% 0;
-      opacity: 0.4;
+      opacity: 0.35;
       filter: blur(1px);
     }
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(360deg); }
-    }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
     #app-container {
       text-align: center;
@@ -121,10 +121,11 @@
       color: var(--gold);
       text-transform: uppercase;
       margin-bottom: 15px;
-      z-index: 2;
+      z-index: 4;
       font-weight: bold;
     }
-    .name-section { margin-bottom: 30px; width: 100%; z-index: 2; }
+
+    .name-section { margin-bottom: 30px; width: 100%; z-index: 4; }
     .for-label {
       font-family: 'Playfair Display', serif;
       font-size: 0.75rem;
@@ -151,7 +152,7 @@
       line-height: 1.6;
       margin-top: auto;
       padding: 0 25px;
-      z-index: 5;
+      z-index: 6;
       color: #1a1a1a;
     }
     .quote-author {
@@ -161,7 +162,7 @@
       opacity: 0.5;
       margin-top: 15px;
       margin-bottom: auto;
-      z-index: 5;
+      z-index: 6;
     }
 
     .rec-row {
@@ -172,7 +173,7 @@
       padding-top: 20px;
       margin-top: 30px;
       text-align: left;
-      z-index: 2;
+      z-index: 6;
     }
     .rec-label {
       font-size: 0.45rem;
@@ -188,56 +189,70 @@
       font-style: italic;
     }
 
-    /* === UPDATED: luxury decoration styling === */
+    /* ======= DECORATIONS (UPDATED: luxe stationery set) ======= */
     .decoration-svg{
       position:absolute;
       cursor:move;
-      z-index:3;
       user-select:none;
       pointer-events:auto;
       mix-blend-mode:multiply;
 
-      width: 82px;
-      height: 82px;
+      width: 84px;
+      height: 84px;
 
       opacity: 0.78;
       filter: saturate(0.95);
       transition: transform 0.08s;
+      z-index: 3;
     }
     .decoration-svg.decoration-sparkle{
       width: 34px;
       height: 34px;
       opacity: 0.55;
+      z-index: 5;
     }
     .decoration-svg.decoration-seal{
-      width: 92px;
-      height: 92px;
-      opacity: 0.82;
+      width: 96px;
+      height: 96px;
+      opacity: 0.85;
+      z-index: 4;
     }
     .decoration-svg.decoration-corner{
-      width: 78px;
-      height: 78px;
+      width: 92px;
+      height: 92px;
       opacity: 0.72;
+      z-index: 4;
+    }
+    .decoration-svg.decoration-divider{
+      width: 140px;
+      height: 40px;
+      opacity: 0.40;
+      z-index: 2; /* behind quote */
+      pointer-events: auto;
     }
 
     .atelier-toolbar {
       margin-top: 25px;
       display: inline-flex;
-      gap: 15px;
-      background: rgba(255,255,255,0.95);
-      padding: 12px 20px;
-      border-radius: 4px;
+      gap: 12px;
+      background: rgba(255,255,255,0.96);
+      padding: 12px 18px;
+      border-radius: 6px;
       border: 0.5px solid var(--gold);
+      backdrop-filter: blur(6px);
     }
     .tool-btn {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 6px;
+      transition: 0.18s;
     }
-    .tool-btn svg { width: 28px; fill: none; stroke: var(--gold); }
+    .tool-btn:hover { background: rgba(197,160,89,0.08); }
+    .tool-btn svg { width: 26px; height: 26px; fill: none; stroke: var(--gold); }
 
     .btn-group { margin-top: 30px; }
     .btn {
@@ -270,6 +285,7 @@
     <div id="result-screen">
       <div id="capture-frame">
         <div class="isa-header">Atelier ISA Correspondence</div>
+
         <div class="name-section">
           <span class="for-label">Dedicated to</span><br />
           <input type="text" class="user-name-input" placeholder="Name" maxlength="22" />
@@ -290,35 +306,54 @@
         </div>
       </div>
 
-      <!-- === UPDATED TOOLBAR: Royal + Tiny Sparkle === -->
+      <!-- UPDATED: curated stationery toolbar -->
       <div class="atelier-toolbar">
+        <!-- Corner Filigree -->
+        <div class="tool-btn" onclick="spawnDecoration('corner')" title="Corner Filigree">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 19c2.8-7 6.8-11 14-14" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M6.5 17.5c2.4-4.9 5.9-8.1 11.2-10.9" stroke-width="1.2" stroke-linecap="round" opacity="0.75"/>
+            <path d="M8.2 18.2c0-1.6 1.1-2.7 2.6-2.7 1.2 0 2.2.7 2.2 1.8 0 .9-.8 1.6-1.8 1.6" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Wax Seal -->
         <div class="tool-btn" onclick="spawnDecoration('seal')" title="Wax Seal">
           <svg viewBox="0 0 24 24">
-            <path d="M12 2.6c5.2 0 9.4 4.2 9.4 9.4S17.2 21.4 12 21.4 2.6 17.2 2.6 12 6.8 2.6 12 2.6Z" stroke-width="1.2"/>
+            <path d="M12 3.2
+                     C13 3.2 13.3 4.1 14.2 4.4
+                     C15.1 4.7 16 4.2 16.7 4.9
+                     C17.4 5.6 16.9 6.5 17.2 7.4
+                     C17.5 8.3 18.4 8.6 18.4 9.6
+                     C18.4 10.6 17.5 10.9 17.2 11.8
+                     C16.9 12.7 17.4 13.6 16.7 14.3
+                     C16 15 15.1 14.5 14.2 14.8
+                     C13.3 15.1 13 16 12 16
+                     C11 16 10.7 15.1 9.8 14.8
+                     C8.9 14.5 8 15 7.3 14.3
+                     C6.6 13.6 7.1 12.7 6.8 11.8
+                     C6.5 10.9 5.6 10.6 5.6 9.6
+                     C5.6 8.6 6.5 8.3 6.8 7.4
+                     C7.1 6.5 6.6 5.6 7.3 4.9
+                     C8 4.2 8.9 4.7 9.8 4.4
+                     C10.7 4.1 11 3.2 12 3.2Z"
+                  stroke-width="1.2" stroke-linejoin="round"/>
           </svg>
         </div>
 
-        <div class="tool-btn" onclick="spawnDecoration('laurel')" title="Laurel Corner">
+        <!-- Divider -->
+        <div class="tool-btn" onclick="spawnDecoration('divider')" title="Divider">
           <svg viewBox="0 0 24 24">
-            <path d="M6 18c3-6 7-9 12-12M6.5 17.5c2.5-4.5 6-7.5 10.8-10.4" stroke-width="1.2"/>
+            <path d="M4 12h16" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M10.2 12c.5-1.3 1.1-2 1.8-2 .7 0 1.3.7 1.8 2" stroke-width="1.2" opacity="0.7"/>
           </svg>
         </div>
 
-        <div class="tool-btn" onclick="spawnDecoration('filigree')" title="Filigree">
-          <svg viewBox="0 0 24 24">
-            <path d="M6 12c0-2.2 1.8-4 4-4 1 0 2 .4 2.7 1.1M18 12c0 2.2-1.8 4-4 4-1 0-2-.4-2.7-1.1M8 16c-.8 1-2.1 1.6-3.5 1.6M16 8c.8-1 2.1-1.6 3.5-1.6" stroke-width="1.2"/>
-          </svg>
-        </div>
-
-        <div class="tool-btn" onclick="spawnDecoration('crest')" title="Crest">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 3l7 3v6c0 5-3.2 8.2-7 9-3.8-.8-7-4-7-9V6l7-3Z" stroke-width="1.2"/>
-          </svg>
-        </div>
-
+        <!-- Sparkle -->
         <div class="tool-btn" onclick="spawnDecoration('sparkle')" title="Sparkle">
           <svg viewBox="0 0 24 24">
-            <path d="M12 3l1.2 6.2L20 12l-6.8 2.8L12 21l-1.2-6.2L4 12l6.8-2.8L12 3Z" stroke-width="1.2"/>
+            <path d="M12 6.2l.8 3.3 3.2.8-3.2.8-.8 3.3-.8-3.3-3.2-.8 3.2-.8.8-3.3Z"
+                  stroke-width="1.2" stroke-linejoin="round"/>
           </svg>
         </div>
       </div>
@@ -354,9 +389,9 @@
         const card = document.createElement('div');
         card.className = 'card';
         card.style.zIndex = i;
-        card.style.transform = `translate(${i * 1}px, ${i * 1}px)`;
+        card.style.transform = `translate(${i}px, ${i}px)`;
         card.innerHTML = `<div class="card-inner-design">${fleurSVG}</div>`;
-        card.onclick = () => shuffleState < 3 ? runShuffle() : revealCard();
+        card.onclick = () => (shuffleState < 3 ? runShuffle() : revealCard());
         deck.appendChild(card);
       }
     }
@@ -365,7 +400,8 @@
       shuffleState++;
       const cards = document.querySelectorAll('.card');
       cards.forEach(c => {
-        c.style.transform = `translate(${(Math.random() - 0.5) * 300}px, ${(Math.random() - 0.5) * 300}px) rotate(${(Math.random() - 0.5) * 90}deg)`;
+        c.style.transform =
+          `translate(${(Math.random() - 0.5) * 300}px, ${(Math.random() - 0.5) * 300}px) rotate(${(Math.random() - 0.5) * 90}deg)`;
       });
       document.getElementById('status-text').innerText = `SHUFFLING (${shuffleState}/3)`;
       if (shuffleState === 3) setTimeout(fanCards, 700);
@@ -393,49 +429,68 @@
         document.getElementById('quote-source').innerText = `— ${data.source}`;
         document.getElementById('movie-title').innerText = data.movie;
         document.getElementById('book-title').innerText = data.book;
-        setTimeout(() => document.getElementById('result-screen').style.opacity = '1', 50);
+        setTimeout(() => (document.getElementById('result-screen').style.opacity = '1'), 50);
       }, 800);
     }
 
-    /* === UPDATED: Royal + Sparkle SVG set === */
+    /* ======= UPDATED: luxe stationery motifs ======= */
     const svgPaths = {
+      corner: `
+        <path d="M6 18c2.5-6.5 6-10.2 12-12" />
+        <path d="M7.2 16.8c2.2-4.6 5.2-7.6 9.9-10.2" opacity="0.75"/>
+        <path d="M8.2 15.2c1.1-1.4 2.3-2.6 3.8-3.6" opacity="0.55"/>
+
+        <path d="M8.2 18c0-1.6 1.1-2.7 2.6-2.7 1.2 0 2.2.7 2.2 1.8 0 .9-.8 1.6-1.8 1.6" opacity="0.9"/>
+        <path d="M12.8 12.6c0-1.6 1.1-2.7 2.6-2.7 1.2 0 2.2.7 2.2 1.8 0 .9-.8 1.6-1.8 1.6" opacity="0.85"/>
+
+        <path d="M10.1 14.4c-.8-.1-1.4-.5-1.7-1.1.8.1 1.4.4 1.9.9" opacity="0.7"/>
+        <path d="M12 12.6c-.8-.1-1.4-.5-1.7-1.1.8.1 1.4.4 1.9.9" opacity="0.7"/>
+        <path d="M13.9 10.8c-.8-.1-1.4-.5-1.7-1.1.8.1 1.4.4 1.9.9" opacity="0.7"/>
+      `,
+
+      divider: `
+        <path d="M6.5 12h11" opacity="0.35"/>
+        <path d="M10.3 12c.5-1.3 1.1-2 1.7-2 .7 0 1.3.7 1.7 2" opacity="0.45"/>
+        <path d="M10.3 12c.5 1.3 1.1 2 1.7 2 .7 0 1.3-.7 1.7-2" opacity="0.45"/>
+        <path d="M9 12c.2-.9.6-1.3 1.1-1.3.6 0 1 .4 1.3 1.3" opacity="0.35"/>
+        <path d="M15 12c-.2-.9-.6-1.3-1.1-1.3-.6 0-1 .4-1.3 1.3" opacity="0.35"/>
+        <circle cx="12" cy="12" r="0.75" opacity="0.55"/>
+      `,
+
       seal: `
-        <circle cx="12" cy="12" r="9.2" />
-        <circle cx="12" cy="12" r="7.2" opacity="0.7"/>
-        <path d="M8.3 15.8L12 6.4l3.7 9.4" />
-        <path d="M9.7 12.7h4.6" opacity="0.85"/>
-        <path d="M12 16.6c2.8-1.1 4.6-3.2 4.6-5.9" opacity="0.35"/>
-        <path d="M12 16.6c-2.8-1.1-4.6-3.2-4.6-5.9" opacity="0.35"/>
+        <path d="M12 3.2
+                 C13 3.2 13.3 4.1 14.2 4.4
+                 C15.1 4.7 16 4.2 16.7 4.9
+                 C17.4 5.6 16.9 6.5 17.2 7.4
+                 C17.5 8.3 18.4 8.6 18.4 9.6
+                 C18.4 10.6 17.5 10.9 17.2 11.8
+                 C16.9 12.7 17.4 13.6 16.7 14.3
+                 C16 15 15.1 14.5 14.2 14.8
+                 C13.3 15.1 13 16 12 16
+                 C11 16 10.7 15.1 9.8 14.8
+                 C8.9 14.5 8 15 7.3 14.3
+                 C6.6 13.6 7.1 12.7 6.8 11.8
+                 C6.5 10.9 5.6 10.6 5.6 9.6
+                 C5.6 8.6 6.5 8.3 6.8 7.4
+                 C7.1 6.5 6.6 5.6 7.3 4.9
+                 C8 4.2 8.9 4.7 9.8 4.4
+                 C10.7 4.1 11 3.2 12 3.2Z" />
+
+        <path d="M12 5.1c2.4 0 4.5 2 4.5 4.5S14.4 14 12 14 7.5 12 7.5 9.6 9.6 5.1 12 5.1Z" opacity="0.55"/>
+
+        <path d="M9.3 12.7L12 6.4l2.7 6.3" opacity="0.95"/>
+        <path d="M10.3 10.9h3.4" opacity="0.8"/>
+
+        <path d="M8.1 9.1c.4-1.6 1.7-2.7 3.9-2.7" opacity="0.22"/>
+        <path d="M15.9 10.1c-.4 1.6-1.7 2.7-3.9 2.7" opacity="0.22"/>
       `,
-      laurel: `
-        <path d="M6.2 17.6c2.4-5.5 6.4-9.2 12.2-12.1" />
-        <path d="M7.2 16.6c2.1-4.2 5.5-7.2 10.3-10" opacity="0.75"/>
-        <path d="M9.1 14.7c-.9-.2-1.6-.7-2-1.5.9.1 1.7.5 2.2 1.2" opacity="0.75"/>
-        <path d="M11 12.8c-.9-.2-1.6-.7-2-1.5.9.1 1.7.5 2.2 1.2" opacity="0.75"/>
-        <path d="M13 10.9c-.9-.2-1.6-.7-2-1.5.9.1 1.7.5 2.2 1.2" opacity="0.75"/>
-        <path d="M15.1 9c-.9-.2-1.6-.7-2-1.5.9.1 1.7.5 2.2 1.2" opacity="0.75"/>
-      `,
-      filigree: `
-        <path d="M7 14.2c1.2-2.6 3.1-4 5.5-4 1.6 0 2.9.6 3.9 1.7" />
-        <path d="M17 9.8c-1.2 2.6-3.1 4-5.5 4-1.6 0-2.9-.6-3.9-1.7" />
-        <path d="M8 17c-1.2 0-2.1-.4-2.8-1.1.9-.2 1.7 0 2.5.5" opacity="0.65"/>
-        <path d="M16 7c1.2 0 2.1.4 2.8 1.1-.9.2-1.7 0-2.5-.5" opacity="0.65"/>
-        <path d="M12 7.6c.6 0 1.1.2 1.5.6-.5.1-1 0-1.4-.3" opacity="0.55"/>
-        <path d="M12 16.4c-.6 0-1.1-.2-1.5-.6.5-.1 1 0 1.4.3" opacity="0.55"/>
-      `,
-      crest: `
-        <path d="M12 4.2l6.6 2.8v5.2c0 4.6-2.9 7.4-6.6 8.3-3.7-.9-6.6-3.7-6.6-8.3V7l6.6-2.8Z"/>
-        <path d="M9 9.8h6" opacity="0.7"/>
-        <path d="M12 8.2v7.8" opacity="0.55"/>
-        <path d="M10.2 12.5l1.8 1.4 1.8-1.4" opacity="0.6"/>
-      `,
+
       sparkle: `
-        <path d="M12 5l.9 4.7L18 12l-5.1 2.3L12 19l-.9-4.7L6 12l5.1-2.3L12 5Z"/>
-        <path d="M18.5 6.5l.4 2 .9.4-2 .4-.4.9-.4-.9-2-.4.9-.4.4-2Z" opacity="0.55"/>
+        <path d="M12 6.2l.8 3.3 3.2.8-3.2.8-.8 3.3-.8-3.3-3.2-.8 3.2-.8.8-3.3Z"/>
+        <path d="M17.6 7.4l.35 1.4 1.35.35-1.35.35-.35 1.4-.35-1.4-1.35-.35 1.35-.35.35-1.4Z" opacity="0.55"/>
       `
     };
 
-    /* === UPDATED: spawnDecoration with curated placement + classy rotation === */
     function spawnDecoration(type) {
       const container = document.getElementById('capture-frame');
       const wrapper = document.createElement('div');
@@ -443,39 +498,54 @@
 
       if (type === 'sparkle') wrapper.classList.add('decoration-sparkle');
       if (type === 'seal') wrapper.classList.add('decoration-seal');
-      if (type === 'laurel' || type === 'filigree') wrapper.classList.add('decoration-corner');
+      if (type === 'corner') wrapper.classList.add('decoration-corner');
+      if (type === 'divider') wrapper.classList.add('decoration-divider');
 
       const W = container.clientWidth;
       const H = container.clientHeight;
 
+      // curated positions (so it looks designed, not random stickers)
       const presets = {
-        seal:     { x: W/2 - 46, y: H - 120, r: 0 },
-        laurel:   { x: 22,       y: 24,      r: 0 },
-        filigree: { x: W - 100,  y: 26,      r: 0 },
-        crest:    { x: W - 112,  y: 88,      r: 0 },
-        sparkle:  { x: W - 74,   y: 210,     r: 0 }
+        corner:  { x: 12,        y: 14,        r: 0 },                // top-left
+        seal:    { x: W/2 - 48,  y: H - 138,   r: 0 },                // bottom-center
+        divider: { x: W/2 - 70,  y: 238,       r: 0 },                // behind quote
+        sparkle: { x: W - 58,    y: 206,       r: 0 }                 // near quote edge
       };
       const p = presets[type] || { x: W/2 - 40, y: H/2 - 40, r: 0 };
 
       wrapper.style.left = `${p.x}px`;
       wrapper.style.top  = `${p.y}px`;
 
+      // IMPORTANT: unique gradient id per decoration (prevents ID collisions)
+      const gid = `goldGrad_${Math.random().toString(16).slice(2)}`;
+
+      const isSeal = type === "seal";
+      const fillVal = isSeal ? "rgba(197,160,89,0.06)" : "none";
+      const strokeW = isSeal ? 0.9 : 0.85;
+
       wrapper.innerHTML = `
         <svg viewBox="0 0 24 24" style="width:100%; height:100%;">
           <defs>
-            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#c5a059;" />
-              <stop offset="45%" style="stop-color:#f4e4bc;" />
-              <stop offset="100%" style="stop-color:#a67c33;" />
+            <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c5a059"/>
+              <stop offset="45%" stop-color="#f4e4bc"/>
+              <stop offset="100%" stop-color="#a67c33"/>
             </linearGradient>
           </defs>
-          <g stroke="url(#goldGrad)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.85">
+          <g
+            stroke="url(#${gid})"
+            fill="${fillVal}"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="${strokeW}"
+          >
             ${svgPaths[type]}
           </g>
         </svg>
       `;
 
-      const rotationSteps = [0, 8, -8, 15, -15];
+      // subtle rotation only (luxury tilt)
+      const rotationSteps = [0, 6, -6, 10, -10];
       let stepIndex = 0;
       let rot = p.r || 0;
 
@@ -495,10 +565,8 @@
 
       document.addEventListener("mousemove", (e) => {
         if (!active) return;
-        const currentX = e.clientX - initialX;
-        const currentY = e.clientY - initialY;
-        xOffset = currentX;
-        yOffset = currentY;
+        xOffset = e.clientX - initialX;
+        yOffset = e.clientY - initialY;
         wrapper.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rot}deg)`;
       });
 
